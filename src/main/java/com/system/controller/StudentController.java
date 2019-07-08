@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -52,6 +53,15 @@ public class StudentController {
         return "student/showCourse";
     }
 
+    //搜索课程
+    @PostMapping(value = "/selectCourse")
+    private String selectCourse(String findByName, Model model) throws Exception {
+
+        List<CourseCustom> list = courseService.findByName(findByName);
+
+        model.addAttribute("courseList", list);
+        return "student/showCourse";
+    }
     // 选课操作
     @RequestMapping(value = "/stuSelectedCourse")
     public String stuSelectedCourse(int id) throws Exception {
